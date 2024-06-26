@@ -1,8 +1,16 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry, CollectionKey } from 'astro:content';
 const allBlogArticles: CollectionEntry<'blog'>[] = await getCollection('blog');
+allBlogArticles.sort(
+  (a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => {
+    return (
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+    );
+  }
+);
+import { formatDate } from '../../utils';
 ---
 
 <MainLayout title="Articles">
@@ -27,7 +35,7 @@ const allBlogArticles: CollectionEntry<'blog'>[] = await getCollection('blog');
                 </a>
               </h2>
               <p class="text-gray-600 text-sm mb-4">
-                {new Date(article.data.pubDate).toLocaleDateString()}
+                {formatDate(article.data.pubDate)}
               </p>
               <div class="flex flex-wrap gap-2">
                 {article.data.tags.map((tag: string, index: number) => (
