@@ -5,7 +5,7 @@ import SearchForm from '../../components/SearchForm.astro';
 const query: string | null = Astro.url.searchParams.get('query');
 // const { getCollection } = await import('astro:content');
 import type { CollectionEntry } from 'astro:content';
-const searchResults = await fetch(
+const searchResults: CollectionEntry<'blog'>[] = await fetch(
   `http://localhost:4321/api/search.json?query=${query}`
 ).then((res) => res.json());
 ---
