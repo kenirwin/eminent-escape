@@ -1,10 +1,9 @@
 ---
-import type { GetStaticPaths } from 'astro';
+// import type { GetStaticPaths } from 'astro';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Tags from '../../components/Tags.astro';
 import { getEntry } from 'astro:content';
 import { formatDate } from '../../utils';
-import { unescapeLeadingUnderscores } from 'typescript';
 const { slug } = Astro.params;
 if (slug === undefined) {
   throw new Error('Slug is required; no slug found');
