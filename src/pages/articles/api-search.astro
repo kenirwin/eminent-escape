@@ -1,0 +1,27 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import SearchForm from '../../components/SearchForm.astro';
+const query: string | null = Astro.url.searchParams.get('query');
+const searchResults = await fetch(
+  `http://localhost:4321/api/search.json?query=${query}`
+).then((res) => res.json());
+---
+
+<MainLayout title="Search Results">
+  <a
+    href="/articles"
+    class="inline-block bg-gray-100 p-2 mb-5 hover:text-white hover:bg-indigo-500"
+    >Back to Articles</a
+  >
+
+  <h1>Search: {query}</h1>
+  <SearchForm />
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      searchResults.searchResults.map((entry) => (
+        <ArticleCard article={entry} />
+      ))
+    }
+  </div>
+</MainLayout>
