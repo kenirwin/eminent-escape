@@ -3,6 +3,8 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import SearchForm from '../../components/SearchForm.astro';
 const query: string | null = Astro.url.searchParams.get('query');
+// const { getCollection } = await import('astro:content');
+import type { CollectionEntry } from 'astro:content';
 const searchResults = await fetch(
   `http://localhost:4321/api/search.json?query=${query}`
 ).then((res) => res.json());
@@ -18,10 +20,6 @@ const searchResults = await fetch(
   <h1>Search: {query}</h1>
   <SearchForm />
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {
-      searchResults.searchResults.map((entry) => (
-        <ArticleCard article={entry} />
-      ))
-    }
+    {searchResults.map((entry) => <ArticleCard article={entry} />)}
   </div>
 </MainLayout>

@@ -8,7 +8,7 @@ export const GET: APIRoute = async ({url}): Promise<Response> => {
 
     // handle no query
     if (query == null) {
-        return new Response(JSON.stringify({ error: 'No query provided' }, {status: 400, headers: {'Content-Type': 'application/json'}}))
+        return new Response(JSON.stringify({ error: 'No query provided' , status: 400, headers: {'Content-Type': 'application/json'}}))
     }
 
     const allBlogArticles: CollectionEntry<'blog'>[] = await getCollection('blog');
@@ -26,5 +26,5 @@ export const GET: APIRoute = async ({url}): Promise<Response> => {
           return titleMatch || bodyMatch || slugMatch;
         }
       ); 
-    return new Response(JSON.stringify({ searchResults }, {status: 200, headers: {'Content-Type': 'application/json'}}))
+    return new Response(JSON.stringify(searchResults), {status: 200, headers: {'Content-Type': 'application/json'}})
 }
